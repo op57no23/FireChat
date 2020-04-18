@@ -1,6 +1,6 @@
 <template>
 	<div class = "Channels">
-	<b-row class = "m-3">
+	<b-row id = "channelHeader" class = "m-3">
 		<h4>Channels</h4>
 		<div>
 		<b-button variant = "outline-dark" v-b-modal.modal-1><b-icon icon="plus-square"></b-icon></b-button>
@@ -26,17 +26,12 @@
 		</b-modal>
 		</div>
 	</b-row>
-	<b-row class = "m-3">
+	<b-row id = "listChannels" class = "m-3">
 		<b-list-group>
 			<b-list-group-item button :class = "{ active: activeChannel === channel.id}" @click="get_channel" v-for="channel in channels" :key="channel.id" :id = "channel.id"> 
 				{{channel.name}}
 			</b-list-group-item>
 		</b-list-group>
-			<ul v-if="errors">
-			<li v-for="error of errors" :key="error">
-			{{error.message}}
-			</li>
-		</ul>
 	</b-row>
 
 
@@ -52,7 +47,6 @@ export default {
 	data () {
 		return {
 			channels: [],
-			errors: [],
 			emptyForm: false,
 			activeChannel: null,
 			form: {
@@ -77,10 +71,7 @@ export default {
 			handleOk(evt) {
 						evt.preventDefault();
 						if (this.validate()) {
-							db.collection('channels').doc().set({name: this.form.channel, messages: []}).then(function() {
-								this.resetModal();
-							})
-					.catch(function (error) { this.errors.push(error)});
+							db.collection('channels').doc().set({name: this.form.channel, messages: []})
 								this.$nextTick(() => {
 									this.$bvModal.hide('modal-1');
 								})
@@ -102,5 +93,21 @@ export default {
 
 .text-danger {
 	text-align: center;
+}
+
+.row .m-3 * {
+		max-width: 100%;
+}
+.Channels {
+		height: 90%;
+}
+
+#channelHeader {
+		height:10%;
+}
+
+#listChannels {
+		height: 85%;
+		overflow-y: scroll;
 }
 </style>

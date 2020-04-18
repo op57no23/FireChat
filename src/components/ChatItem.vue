@@ -3,7 +3,7 @@
 	<b-row v-if="messageUser === user" id = "right">
 		<b-col cols = "6"></b-col>
 		<b-col cols = "6" @mouseover="hover=true" @mouseleave= "hover=false">
-			<small v-if="hover" class = "font-weight-bolder"> Me </small><br>
+			<small class = "font-weight-bolder"> Me </small><br>
 			<small v-if="hover"> {{formatDate(messageDate)}}</small>
 			<p> {{messageText}} </p>
 			

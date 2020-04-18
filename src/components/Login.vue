@@ -26,6 +26,8 @@
       </b-form-group>
       <b-button type="submit" variant="primary">Submit</b-button>
     </b-form>
+    <div class = "mt-4"> Not signed up? <router-link to="/register">Register here</router-link></div>
+
     <p>{{error}}</p>
   </b-container>
 
@@ -50,17 +52,15 @@ export default {
       },
       methods: {
 		login () {
-			firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password).catch(function(error) {
-  // Handle Errors here.
-				var errorCode = error.code;
-				var errorMessage = error.message;
-				console.log(errorCode, errorMessage);
-  // ...
-}) 
+			firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password)
 			.then(() => {
 				this.$router.push({name: 'chat'});
 			})
-        }
+			.catch((error) => {
+				var errorMessage = error.message;
+				alert(errorMessage);
+}) 
+}
       }
   }
 </script>

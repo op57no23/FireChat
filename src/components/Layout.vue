@@ -11,7 +11,7 @@
           <template v-slot:button-content>
             <em>{{userName}}</em>
           </template>
-          <b-dropdown-item>Sign Out</b-dropdown-item>
+          <b-dropdown-item @click="logout">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
   </nav>
@@ -54,6 +54,11 @@ export default {
 					this.current_channel = id;
 					this.$bind('current_channel', channels.doc(this.current_channel));
 				},
+				logout: function() {
+					firebase.auth().signOut()
+					.then(() => {
+					this.$router.push({name: 'login'})})
+				}
 },
 
 		beforeCreate: function() {
@@ -94,8 +99,8 @@ export default {
 	max-height: 90vh;
 }
 
-.Channels {
-	overflow-y: scroll;
+.col-3 {
+		height: 100%;
 }
 .col-9 {
 	height: 100%;
@@ -104,7 +109,7 @@ export default {
 .col-9 h2 {
 	position: absolute;
 	top: 40%;
-	left: 30%;	
+	left: 25%;	
 }
 
 </style>

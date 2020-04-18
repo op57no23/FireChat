@@ -1,6 +1,6 @@
 <template>
 <div class="Chat">
-<b-container class = 'mt-4'>
+<b-container>
 <ChatItem v-for="message in channelMessages" :key=message.id :messageUser="message.user" :user = "user" :messageUserName="message.userName" :messageText="message.text" :messageDate = "message.date"></ChatItem>
 
  </b-container>  

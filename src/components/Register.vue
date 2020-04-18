@@ -60,28 +60,25 @@ export default {
       },
       methods: {
         register () {
-				firebase.auth().createUserWithEmailAndPassword(this.form.email, this.form.password).catch(function(error) {
+				firebase.auth().createUserWithEmailAndPassword(this.form.email, this.form.password)
+				.then(() => {
+					db.collection('users').doc().set({name: this.form.name, email: this.form.email});
+					this.$router.push({name: 'login'});
+			})
+			.catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
 	if (errorCode == 'auth/email-already-in-use') {
 			alert('That email is already registered. Please login.')
-			return false;
 	}
 	if (errorCode =='auth/invalid-email'){
 			alert('Please enter a valid email');
-			return false;
 	}
    if (errorCode == 'auth/weak-password') {
     alert('The password is too weak.');
-	return false;
 				}
 				}
 				)
-			.then(() => {
-					db.collection('users').doc().set({name: this.form.name, email: this.form.email});
-					this.$router.push({name: 'login'});
-			}
-					)
         }
   }
 }
