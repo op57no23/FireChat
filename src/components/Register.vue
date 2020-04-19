@@ -22,52 +22,52 @@
 
 
 <script>
-    import firebase from 'firebase/app'
-    import {
-        db
-    } from '../db'
+import firebase from 'firebase/app'
+import {
+    db
+} from '../db'
 
-    export default {
-        data() {
-            return {
-                form: {
-                    email: '',
-                    name: '',
-                    password: ''
-                },
-            }
-        },
-        methods: {
-            register() {
-                firebase.auth().createUserWithEmailAndPassword(this.form.email, this.form.password)
-                    .then(() => {
-                        db.collection('users').doc().set({
-                            name: this.form.name,
-                            email: this.form.email
-                        });
-                        this.$router.push({
-                            name: 'login'
-                        });
-                    })
-                    .catch(function(error) {
-                        var errorCode = error.code;
-                        if (errorCode == 'auth/email-already-in-use') {
-                            alert('That email is already registered. Please login.')
-                        }
-                        if (errorCode == 'auth/invalid-email') {
-                            alert('Please enter a valid email');
-                        }
-                        if (errorCode == 'auth/weak-password') {
-                            alert('The password is too weak.');
-                        }
-                    })
-            }
+export default {
+    data() {
+        return {
+            form: {
+                email: '',
+                name: '',
+                password: ''
+            },
+        }
+    },
+    methods: {
+        register() {
+            firebase.auth().createUserWithEmailAndPassword(this.form.email, this.form.password)
+                .then(() => {
+                    db.collection('users').doc().set({
+                        name: this.form.name,
+                        email: this.form.email
+                    });
+                    this.$router.push({
+                        name: 'login'
+                    });
+                })
+                .catch(function(error) {
+                    var errorCode = error.code;
+                    if (errorCode == 'auth/email-already-in-use') {
+                        alert('That email is already registered. Please login.')
+                    }
+                    if (errorCode == 'auth/invalid-email') {
+                        alert('Please enter a valid email');
+                    }
+                    if (errorCode == 'auth/weak-password') {
+                        alert('The password is too weak.');
+                    }
+                })
         }
     }
+}
 </script>
 <style>
-    form {
-        width: 50%;
-        margin: auto;
-    }
+form {
+    width: 50%;
+    margin: auto;
+}
 </style>

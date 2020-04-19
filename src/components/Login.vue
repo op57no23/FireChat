@@ -20,30 +20,30 @@
 
 
 <script>
-    import firebase from 'firebase/app'
-    export default {
-        data() {
-            return {
-                form: {
-                    email: '',
-                    password: ''
+import firebase from 'firebase/app'
+export default {
+    data() {
+        return {
+            form: {
+                email: '',
+                password: ''
 
-                },
-            }
-        },
-        methods: {
-            login() {
-                firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password)
-                    .then(() => {
-                        this.$router.push({
-                            name: 'chat'
-                        });
-                    })
-                    .catch((error) => {
-                        var errorMessage = error.message;
-                        alert(errorMessage);
-                    })
-            }
+            },
+        }
+    },
+    methods: {
+        login() {
+            firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password)
+                .then(() => {
+                    this.$router.push({
+                        name: 'chat'
+                    });
+                })
+                .catch((error) => {
+                    var errorMessage = error.message;
+                    alert(errorMessage);
+                })
         }
     }
+}
 </script>

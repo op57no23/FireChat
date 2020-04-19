@@ -10,48 +10,48 @@
 </template>
 
 <script>
-    import ChatItem from './ChatItem.vue'
-    import ChatBar from './ChatBar.vue'
+import ChatItem from './ChatItem.vue'
+import ChatBar from './ChatBar.vue'
 
-    export default {
-        components: {
-            ChatItem,
-            ChatBar
-        },
-        props: ['channelMessages', 'channel', 'userName', 'user'],
-        methods: {
-				//propagating emit from chatBar
-            new_message: function(message) {
-                this.$emit('new_message', message);
-            }
-        },
-        updated: function() {
-				//resetting scrolling to bottom after message submit
-            this.$nextTick(() => {
-                var container = this.$el.querySelector('.container');
-                container.scrollTop = container.scrollHeight;
-            })
+export default {
+    components: {
+        ChatItem,
+        ChatBar
+    },
+    props: ['channelMessages', 'channel', 'userName', 'user'],
+    methods: {
+        //propagating emit from chatBar
+        new_message: function(message) {
+            this.$emit('new_message', message);
         }
+    },
+    updated: function() {
+        //resetting scrolling to bottom after message submit
+        this.$nextTick(() => {
+            var container = this.$el.querySelector('.container');
+            container.scrollTop = container.scrollHeight;
+        })
     }
+}
 </script>
 
 <style>
-    .Chat .container {
-        height: 90%;
-        overflow-y: scroll;
-    }
+.Chat .container {
+    height: 90%;
+    overflow-y: scroll;
+}
 
-    .ChatBar {
-        height: 10%;
-        display: flex;
-        justify-content: center;
-    }
+.ChatBar {
+    height: 10%;
+    display: flex;
+    justify-content: center;
+}
 
-    .Chat {
-        height: 100%;
-    }
+.Chat {
+    height: 100%;
+}
 
-    .ChatBar form {
-        width: 100%;
-    }
+.ChatBar form {
+    width: 100%;
+}
 </style>

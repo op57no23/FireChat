@@ -9,40 +9,40 @@
 </template>
 
 <script>
-    import {
-        db,
-        Timestamp
-    } from '../db'
-    import firebase from 'firebase'
+import {
+    db,
+    Timestamp
+} from '../db'
+import firebase from 'firebase'
 
-    export default {
+export default {
 
-        data() {
-            return {
-                form: {
-                    chatMessage: ''
-                }
+    data() {
+        return {
+            form: {
+                chatMessage: ''
             }
-        },
-        methods: {
-            submitMessage: function() {
-					//creating new message document
-                const messageId = db.collection('messages').doc().id;
-                db.collection('messages').doc(messageId).set({
-                    user: this.user,
-                    userName: this.userName,
-                    text: this.form.chatMessage,
-                    channel: db.collection('channels').doc(this.channel),
-                    date: Timestamp.fromDate(new Date())
-                });
-				//adding message reference to channel document
-                db.collection('channels').doc(this.channel).update({
-                    messages: firebase.firestore.FieldValue.arrayUnion(db.collection('messages').doc(messageId))
-                });
-				//resetting form
-                this.form.chatMessage = '';
-            }
-        },
-        props: ['channel', 'user', 'userName']
-    }
+        }
+    },
+    methods: {
+        submitMessage: function() {
+            //creating new message document
+            const messageId = db.collection('messages').doc().id;
+            db.collection('messages').doc(messageId).set({
+                user: this.user,
+                userName: this.userName,
+                text: this.form.chatMessage,
+                channel: db.collection('channels').doc(this.channel),
+                date: Timestamp.fromDate(new Date())
+            });
+            //adding message reference to channel document
+            db.collection('channels').doc(this.channel).update({
+                messages: firebase.firestore.FieldValue.arrayUnion(db.collection('messages').doc(messageId))
+            });
+            //resetting form
+            this.form.chatMessage = '';
+        }
+    },
+    props: ['channel', 'user', 'userName']
+}
 </script>

@@ -25,87 +25,85 @@
                 </b-list-group-item>
             </b-list-group>
         </b-row>
-
-
     </div>
 </template>
 
 <script>
-    import {
-        db
-    } from '../db'
+import {
+    db
+} from '../db'
 
-    export default {
-        name: 'Channels',
-        data() {
-            return {
-                channels: [],
-                emptyForm: false,
-                activeChannel: null,
-                form: {
-                    channel: ''
-                }
-            }
-        },
-        firestore: {
-            channels: db.collection('channels'),
-        },
-        methods: {
-			//check if channel name input empty	
-            validate() {
-                if (this.form.channel) {
-                    return true;
-                }
-                return false;
-            },
-            resetModal() {
-                this.form.channel = '';
-                this.emptyForm = false;
-            },
-			//validates, creates, and closes modal
-            handleOk(evt) {
-                evt.preventDefault();
-                if (this.validate()) {
-                    db.collection('channels').doc().set({
-                        name: this.form.channel,
-                        messages: []
-                    })
-                    this.$nextTick(() => {
-                        this.$bvModal.hide('modal-1');
-                    })
-                } else {
-                    this.emptyForm = true;
-                }
-
-            },
-			//sets active channel and updates channel messages data in Layout
-            get_channel(evt) {
-                this.activeChannel = evt.srcElement.id;
-                this.$emit('change_channel', this.activeChannel);
+export default {
+    name: 'Channels',
+    data() {
+        return {
+            channels: [],
+            emptyForm: false,
+            activeChannel: null,
+            form: {
+                channel: ''
             }
         }
+    },
+    firestore: {
+        channels: db.collection('channels'),
+    },
+    methods: {
+        //check if channel name input empty	
+        validate() {
+            if (this.form.channel) {
+                return true;
+            }
+            return false;
+        },
+        resetModal() {
+            this.form.channel = '';
+            this.emptyForm = false;
+        },
+        //validates, creates, and closes modal
+        handleOk(evt) {
+            evt.preventDefault();
+            if (this.validate()) {
+                db.collection('channels').doc().set({
+                    name: this.form.channel,
+                    messages: []
+                })
+                this.$nextTick(() => {
+                    this.$bvModal.hide('modal-1');
+                })
+            } else {
+                this.emptyForm = true;
+            }
+
+        },
+        //sets active channel and updates channel messages data in Layout
+        get_channel(evt) {
+            this.activeChannel = evt.srcElement.id;
+            this.$emit('change_channel', this.activeChannel);
+        }
     }
+}
 </script>
 
 <style>
-    .text-danger {
-        text-align: center;
-    }
+.text-danger {
+    text-align: center;
+}
 
-    .row .m-3 * {
-        max-width: 100%;
-    }
+.row .m-3 * {
+    max-width: 100%;
+}
 
-    .Channels {
-        height: 90%;
-    }
+.Channels {
+    height: 90%;
+}
 
-    #channelHeader {
-        height: 10%;
-    }
+#channelHeader {
+    height: 10%;
+}
 
-    #listChannels {
-        height: 85%;
-        overflow-y: scroll;
-    }
+#listChannels {
+    height: 85%;
+    overflow-y: scroll;
+}
 </style>

@@ -19,6 +19,8 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(firestorePlugin)
 
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
 firebase.auth().onAuthStateChanged(() => {
     if (!app) {
         app = new Vue({
